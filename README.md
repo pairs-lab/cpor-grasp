@@ -127,6 +127,8 @@ CPOR-grasp/
 
 ## Inference
 
+**Implementation note.** The released code uses cached intermediate outputs between pipeline stages for efficient and reproducible execution.
+
 ### Reproduce the reported scores
 
 These read the fused edge scores shipped in `logs/`. No GPU, no API key, no dataset download.
