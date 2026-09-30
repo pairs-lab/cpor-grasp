@@ -1,0 +1,69 @@
+# vocc-grasp — push to GitHub
+#
+# Run from the repository root, in order.
+#
+#   git init && git branch -M main
+#   git config user.name  "Your Name"
+#   git config user.email "you@example.com"
+#
+# .gitignore keeps .env, model weights, datasets and output/ out. Check with
+# `git status` before the first commit.
+
+
+git add .gitignore LICENSE .env.example
+git commit -m "Add licence, gitignore and env template"
+
+git add requirements.txt scripts/
+git commit -m "Add install scripts and pinned requirements"
+
+git add gemini_client.py unobench_gemini_common.py gemini_uoais_lib.py
+git commit -m "Add Gemini client and prompting layer"
+
+git add uoais_obstruction.py uoais_graph.py run_uoais_pipeline.py run_uoais_pipeline_real.py run_uoais_pipeline_v0.py
+git commit -m "Add UOAIS segmentation and geometric edge scoring"
+
+git add run_gemini_uoais_ref.py run_gemini_uoais_ref_batch.py run_gemini_uoais_ref_batch_real.py
+git commit -m "Add the proposed pipeline: Gemini over a UOAIS geometry table"
+
+git add configs/
+git commit -m "Add pipeline config"
+
+git add calibration/ export_scores.py export_fused_weighted.py fuse_calibrate_eval.py
+git commit -m "Add adaptive Platt calibration and logit fusion
+
+Fit once on synthetic, used unchanged for real and deployment."
+
+git add math/
+git commit -m "Add Top-K MAP inference over acyclic occlusion graphs"
+
+git add evaluate_nlp.py evaluate_occlusion_graph.py graph_eval_lib.py
+git commit -m "Add evaluation scripts"
+
+git add grasp_viz/
+git commit -m "Add grasp stage and rendering
+
+FGC-GraspNet with the Robotiq 2F-85 measured in-sim."
+
+git add FreeGrasp_code/ uoais-ft/
+git commit -m "Vendor FGC-GraspNet and UOAIS
+
+luyh20/FGC-GraspNet and gist-ailab/uoais @25eab86, source only.
+uoais-ft carries a build fix and this project's fine-tuning."
+
+git add UnoBench/ test_GT_subset_hardall_easy300_medium300.json logs/
+git commit -m "Add eval splits and fused edge scores"
+
+git add demo_rgbd/ demo.py
+git commit -m "Add RGB-D demo and 28 test scenes"
+
+git add assets/ docs/ README.md
+git commit -m "Add README and results"
+
+
+# Before publishing — all three should print nothing:
+git ls-files | grep -E '\.(pth|tar|ckpt|npy|npz)$|(^|/)\.env$'
+git grep -InE 'AIza[A-Za-z0-9_-]{30}|sk-[A-Za-z0-9]{32}|ghp_[A-Za-z0-9]{36}' HEAD
+git status --porcelain
+
+git remote add origin https://github.com/<you>/vocc-grasp.git
+git push -u origin main
